@@ -131,6 +131,12 @@ public class DevServicesKafkaProcessor {
                     useSharedNetwork)
                     .withEnv(config.containerEnv())
                     .withSharedServiceLabel(launchMode.getLaunchMode(), config.serviceName());
+            case OFFICIAL_KAFKA -> new OfficialKafkaContainer(DockerImageName.parse(config.effectiveImageName()),
+                    config.port().orElse(0),
+                    composeProjectBuildItem.getDefaultNetworkId(),
+                    useSharedNetwork)
+                    .withEnv(config.containerEnv())
+                    .withSharedServiceLabel(launchMode.getLaunchMode(), config.serviceName());
         };
         return startable;
     }
